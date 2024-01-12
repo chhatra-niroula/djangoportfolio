@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Books{% endblock title %}
+
+{% block content %}
+{% if messages %}
+    <div class="messages grid place-content-center">
+        {% for message in messages %}
+        <div{% if message.tags %} class="{{ message.tags }} bg-slate-700 py-3 px-5 mx-5 rounded-lg flex items-center justify-center text-sm md:text-base"{% endif %}>
+            <p class=''><i class="fa-regular fa-bell"></i> {{ message }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+<div class='bg-gray-800 text-white p-3 md:px-10 lg:px-20 xl:px-40 2xl:px-72'>
+    <p style="font-family: Poppins-Bold" class='text-4xl font-extrabold py-5 text-center md:text-start'>Books Palace</p>
+    <form class='flex-col p-5' action="/books/create/" name="createbooks" method="POST" onsubmit="return validateForm()">
+        {% csrf_token %}
+        <label for="bookname">Book Name:</label>
+        <input class='p-3 w-full my-2 bg-gray-900 border-slate-700 rounded-lg' type="text" name="bookname"><br><br>
+        <label for="bookimage">Book Image:</label>
+        <input class='p-3 w-full my-2 bg-gray-900 border-slate-700 rounded-lg' type="file" name="bookimage"
+            id="bookimage"><br><br>
+        <label for="author">Author</label>
+        <input class='p-3 w-full my-2 bg-gray-900 border-slate-700 rounded-lg' type="text" name="bookauthor"><br><br>
+        <label for="email">Email</label>
+        <input class='p-3 w-full my-2 bg-gray-900 border-slate-700 rounded-lg' type="email" name="bookemail"><br><br>
+
+        <label for="bookdescribe">Book Description:</label><br>
+        <textarea class='p-3 w-full my-2 bg-gray-900 border-slate-700 rounded-lg' name="bookdescribe" id="bookdescribe"
+            cols="30" rows="4"></textarea><br><br>
+        <input type="checkbox" name="newsletter" id="newsletter">
+        <label for="newsletter">Subscribe?</label><br><br>
+        <input class='p-3 w-full my-2 bg-gray-900 border-slate-700 rounded-lg' type="submit" value="Submit">
+    </form>
+</div>
+{% endblock content %}

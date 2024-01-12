@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect, redirect, get_object_or_404
 from django.http import Http404
-from home.models import Blog
+from home.models import Blog, Book
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
@@ -20,6 +20,9 @@ def about (request):
 
 def thanks(request):
     return render(request, 'thanks.html')
+
+def books(request):
+    return render(request, 'books.html')
 
 def contact (request):
     if request.method == 'POST':
@@ -47,7 +50,7 @@ def contact (request):
                 Email:\n\t\t{}\n
                 Phone:\n\t\t{}\n
                 '''.format(form_data['name'], form_data['message'], form_data['email'],form_data['phone'])
-                send_mail('You got a mail!', message, '', ['dev.ash.py@gmail.com'])
+                send_mail('You got a mail!', message, '', ['findchhatra@gmail.com'])
                 messages.success(request, 'Your message was sent.')
                 # return HttpResponseRedirect('/thanks')
             else:
@@ -108,3 +111,27 @@ def blogpost (request, slug):
 #     blog = Blog.objects.filter(slug=slug).first()
 #     context = {'blog': blog}
 #     return render(request, 'blogpost.html', context)
+
+
+
+def createbook(request):
+    if request.method == 'POST':
+        name = request.POST.get('bookname')
+        picture = request.POST.get('bookimage')
+        author = request.POST.get('bookauthor')
+        email = request.POST.get('bookemail')
+        describe = request.POST.get('bookdescribe')
+        checkEmpty = ['', ' ']
+
+        if name in checkEmpty or picture in checkEmpty or author in checkEmpty or email in checkEmpty or describe in checkEmpty:
+            messages.error(request, "One or more Fields Empty !")
+        else:
+            Book.objects.create(name=name, picture=picture, author=author, email=email, describe=describe)
+            return render(request, 'thanks.html', {"message": "Book record created"})
+        
+        return render(request, 'books.html', {})
+    
+    else:
+        messages.error(request, "error in submiting form")
+        return render(request, 'books.html', {})
+        
