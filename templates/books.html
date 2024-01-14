@@ -4,6 +4,15 @@
 {% block title %}Books{% endblock title %}
 
 {% block content %}
+<!-- list books -->
+<div class="bg-gray-800 text-white p-3 md:px-10 lg:px-20 xl:px-40 2xl:px-72">
+    {% for data in dataset %}
+        <p class=''><i class="fa-regular fa-bell"></i> Book Name:  {{ data.name }} <br/></p>
+        <p class=''><i class="fa-regular fa-bell"></i> Author:  {{ data.author }} <br/></p>
+        <p class=''><i class="fa-regular fa-bell"></i> Author Email: {{ data.email }} <br/></p>
+    {% endfor %}
+</div>
+
 {% if messages %}
     <div class="messages grid place-content-center">
         {% for message in messages %}
@@ -14,7 +23,7 @@
     </div>
     {% endif %}
 <div class='bg-gray-800 text-white p-3 md:px-10 lg:px-20 xl:px-40 2xl:px-72'>
-    <p style="font-family: Poppins-Bold" class='text-4xl font-extrabold py-5 text-center md:text-start'>Books Palace</p>
+    <p style="font-family: Poppins-Bold" class='text-4xl font-extrabold py-5 text-center md:text-start'>Request Books</p>
     <form class='flex-col p-5' action="/books/create/" name="createbooks" method="POST" onsubmit="return validateForm()">
         {% csrf_token %}
         <label for="bookname">Book Name:</label>
@@ -30,8 +39,6 @@
         <label for="bookdescribe">Book Description:</label><br>
         <textarea class='p-3 w-full my-2 bg-gray-900 border-slate-700 rounded-lg' name="bookdescribe" id="bookdescribe"
             cols="30" rows="4"></textarea><br><br>
-        <input type="checkbox" name="newsletter" id="newsletter">
-        <label for="newsletter">Subscribe?</label><br><br>
         <input class='p-3 w-full my-2 bg-gray-900 border-slate-700 rounded-lg' type="submit" value="Submit">
     </form>
 </div>

@@ -134,4 +134,12 @@ def createbook(request):
     else:
         messages.error(request, "error in submiting form")
         return render(request, 'books.html', {})
-        
+
+
+def list_book(request):
+    context ={}
+
+    context["dataset"] = Book.objects.all()
+    print("hello",context)
+
+    return render(request, "books.html", context)
