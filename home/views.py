@@ -129,11 +129,11 @@ def createbook(request):
             Book.objects.create(name=name, picture=picture, author=author, email=email, describe=describe)
             return render(request, 'thanks.html', {"message": "Book record created"})
         
-        return render(request, 'books.html', {})
+        return render(request, 'request_books.html', {})
     
     else:
         messages.error(request, "error in submiting form")
-        return render(request, 'books.html', {})
+        return render(request, 'request_books.html', {})
 
 
 def list_book(request):
@@ -142,4 +142,29 @@ def list_book(request):
     context["dataset"] = Book.objects.all()
     print("hello",context)
 
-    return render(request, "books.html", context)
+    #return render(request, "books.html", context)
+    return render(request, "list_books.html", context)
+
+
+def book_details(request, id):
+    try:
+        print(id)
+        book = Book.objects.get(id=id)
+        print("Hi ", book.describe)
+        context = {'book': book}
+        print(context)
+        return render(request, 'details_books.html', context)
+    except Book.DoesNotExist:
+        context = {'message': 'Blog post not found'}
+        return render(request, '404.html', context, status=404)
+
+
+
+# def blogpost (request, slug):
+#     try:
+#         blog = Blog.objects.get(slug=slug)
+#         context = {'blog': blog}
+#         return render(request, 'blogpost.html', context)
+#     except Blog.DoesNotExist:
+#         context = {'message': 'Blog post not found'}
+#         return render(request, '404.html', context, status=404)

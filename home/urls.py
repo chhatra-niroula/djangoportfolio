@@ -14,5 +14,8 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('thanks', views.thanks, name='thanks'),
     path('books', views.list_book, name='books'),
+    path('books/<str:id>', views.book_details, name='book_details'),
     path('books/create/', views.createbook, name='createbooks'),
 ]
+
+#/blogpost/{{blog.slug}}'
